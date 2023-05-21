@@ -121,6 +121,7 @@ android_app {
         "WallpaperCropper",
         "WallpaperPicker",
         "WallpaperPicker2",
+	"WallpaperPickerGoogleRelease",
     ],
     required: [
         "default_permissions_com.android.wallpaper",
