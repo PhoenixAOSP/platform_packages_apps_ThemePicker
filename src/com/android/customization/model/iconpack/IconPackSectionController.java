@@ -27,14 +27,15 @@ import androidx.annotation.Nullable;
 import com.android.customization.model.CustomizationManager.Callback;
 import com.android.customization.model.CustomizationManager.OptionsFetchedListener;
 import com.android.customization.model.CustomizationOption;
-import com.android.customization.picker.iconpack.IconPackFragment;
-import com.android.customization.picker.iconpack.IconPackSectionView;
 import com.android.customization.widget.OptionSelectorController;
 import com.android.customization.widget.OptionSelectorController.OptionSelectedListener;
 
 import com.android.wallpaper.R;
 import com.android.wallpaper.model.CustomizationSectionController;
 import com.android.wallpaper.util.LaunchUtils;
+
+import com.android.customization.picker.iconpack.IconPackFragment;
+import com.android.customization.picker.iconpack.IconPackSectionView;
 
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class IconPackSectionController implements CustomizationSectionController
         }, /* reload= */ true);
 
         iconPackSectionView.setOnClickListener(v -> mSectionNavigationController.navigateTo(
-                IconPackFragment.newInstance(context.getString(R.string.preview_name_icon))));
+                IconPackFragment.newInstance(context.getString(R.string.icon_pack_title))));
 
         return iconPackSectionView;
     }

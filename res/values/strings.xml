@@ -18,6 +18,8 @@
     <!-- The name of this application, a theme picker. [CHAR LIMIT=50] -->
     <string name="app_name">Wallpaper &amp; style</string>
 
+    <string name="icon_pack_title">System Icon Packs</string>
+
     <!-- Title of a section of the customization picker where the user can select a Theme for the
         device. [CHAR LIMIT=15] -->
     <string name="theme_title">Style</string>

@@ -19,10 +19,8 @@ import static com.android.customization.model.ResourceConstants.ANDROID_PACKAGE;
 import static com.android.customization.model.ResourceConstants.SETTINGS_PACKAGE;
 import static com.android.customization.model.ResourceConstants.SYSUI_PACKAGE;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_ANDROID;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_LAUNCHER;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SETTINGS;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SYSUI;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_THEMEPICKER;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -55,24 +53,22 @@ public class IconPackOption implements CustomizationOption<IconPackOption> {
             R.id.preview_icon_0, R.id.preview_icon_1, R.id.preview_icon_2, R.id.preview_icon_3,
             R.id.preview_icon_4, R.id.preview_icon_5
     };
+    public static final String[] OVERLAY_PACKAGES = { ANDROID_PACKAGE, SETTINGS_PACKAGE, SYSUI_PACKAGE };
 
     private List<Drawable> mIcons = new ArrayList<>();
     private String mTitle;
     private boolean mIsDefault;
-    private Context mContext;
 
     // Mapping from category to overlay package name
     private final Map<String, String> mOverlayPackageNames = new HashMap<>();
 
-    public IconPackOption(Context context, String title, boolean isDefault) {
-        mContext = context;
+    public IconPackOption(String title, boolean isDefault) {
         mTitle = title;
         mIsDefault = isDefault;
-
     }
 
-    public IconPackOption(Context context, String title) {
-        this(context, title, false);
+    public IconPackOption(String title) {
+        this(title, false);
     }
 
     @Override
@@ -101,9 +97,7 @@ public class IconPackOption implements CustomizationOption<IconPackOption> {
         if (mIsDefault) {
             return overlayManager.getEnabledPackageName(SYSUI_PACKAGE, OVERLAY_CATEGORY_ICON_SYSUI) == null &&
                     overlayManager.getEnabledPackageName(SETTINGS_PACKAGE, OVERLAY_CATEGORY_ICON_SETTINGS) == null &&
-                    overlayManager.getEnabledPackageName(ANDROID_PACKAGE, OVERLAY_CATEGORY_ICON_ANDROID) == null &&
-                    overlayManager.getEnabledPackageName(ResourceConstants.getLauncherPackage(mContext), OVERLAY_CATEGORY_ICON_LAUNCHER) == null &&
-                    overlayManager.getEnabledPackageName(mContext.getPackageName(), OVERLAY_CATEGORY_ICON_THEMEPICKER) == null;
+                    overlayManager.getEnabledPackageName(ANDROID_PACKAGE, OVERLAY_CATEGORY_ICON_ANDROID) == null;
         }
         for (Map.Entry<String, String> overlayEntry : getOverlayPackages().entrySet()) {
             if (overlayEntry.getValue() == null || !overlayEntry.getValue().equals(overlayManager.getEnabledPackageName(determinePackage(overlayEntry.getKey()), overlayEntry.getKey()))) {
@@ -143,10 +137,6 @@ public class IconPackOption implements CustomizationOption<IconPackOption> {
                return SETTINGS_PACKAGE;
            case OVERLAY_CATEGORY_ICON_ANDROID:
                return ANDROID_PACKAGE;
-           case OVERLAY_CATEGORY_ICON_LAUNCHER:
-               return ResourceConstants.getLauncherPackage(mContext);
-           case OVERLAY_CATEGORY_ICON_THEMEPICKER:
-               return mContext.getPackageName();
            default:
                return null;
        }
@@ -168,8 +158,7 @@ public class IconPackOption implements CustomizationOption<IconPackOption> {
      * @return whether this icon option has overlays and previews for all the required packages
      */
     public boolean isValid(Context context) {
-        return mOverlayPackageNames.keySet().size() ==
-                ResourceConstants.getPackagesToOverlay(context).length;
+        return mOverlayPackageNames.keySet().size() == 3;
     }
 
     public boolean isDefault() {

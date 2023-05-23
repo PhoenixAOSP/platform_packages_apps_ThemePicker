@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/preview_name_icon"
+            android:text="@string/icon_pack_title"
             style="@style/SectionTitleTextStyle" />
 
         <TextView

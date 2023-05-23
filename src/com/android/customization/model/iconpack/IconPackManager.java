@@ -16,10 +16,8 @@
 package com.android.customization.model.iconpack;
 
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_ANDROID;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_LAUNCHER;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SETTINGS;
 import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_SYSUI;
-import static com.android.customization.model.ResourceConstants.OVERLAY_CATEGORY_ICON_THEMEPICKER;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -49,9 +47,7 @@ public class IconPackManager implements CustomizationManager<IconPackOption> {
     private IconPackOptionProvider mProvider;
     private static final String TAG = "IconPackManager";
     private static final String KEY_STATE_CURRENT_SELECTION = "IconPackManager.currentSelection";
-    private static final String[] mCurrentCategories = new String[]{
-            OVERLAY_CATEGORY_ICON_ANDROID, OVERLAY_CATEGORY_ICON_SETTINGS, OVERLAY_CATEGORY_ICON_SYSUI,
-            OVERLAY_CATEGORY_ICON_LAUNCHER, OVERLAY_CATEGORY_ICON_THEMEPICKER};
+    private static final String[] mCurrentCategories = new String[]{OVERLAY_CATEGORY_ICON_ANDROID, OVERLAY_CATEGORY_ICON_SETTINGS, OVERLAY_CATEGORY_ICON_SYSUI};
 
     IconPackManager(Context context, OverlayManagerCompat overlayManager, IconPackOptionProvider provider) {
         mContext = context;
@@ -104,7 +100,7 @@ public class IconPackManager implements CustomizationManager<IconPackOption> {
 
     private boolean persistOverlay(IconPackOption toPersist) {
         String value = Settings.Secure.getStringForUser(mContext.getContentResolver(),
-                Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES, UserHandle.myUserId());
+                Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES, UserHandle.USER_CURRENT);
         JSONObject json;
         if (value == null) {
             json = new JSONObject();
@@ -132,7 +128,7 @@ public class IconPackManager implements CustomizationManager<IconPackOption> {
         // updating the setting
         Settings.Secure.putStringForUser(mContext.getContentResolver(),
                 Settings.Secure.THEME_CUSTOMIZATION_OVERLAY_PACKAGES,
-                json.toString(), UserHandle.myUserId());
+                json.toString(), UserHandle.USER_CURRENT);
         return true;
     }
 
